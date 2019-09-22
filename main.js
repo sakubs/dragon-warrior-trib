@@ -4,6 +4,7 @@ const FONT = "48px monospace";
 
 /* 内部カウンター*/
 let gFrame = 0;
+let gImgMap;
 
 function WmTimer() {
     ++gFrame;
@@ -17,7 +18,8 @@ function WmTimer() {
 
 /* ブラウザ起動イベント */
 window.onload = function() {
-    
+    gImgMap = new Image();
+        
     setInterval(function() {
         /* 30.3fps */
         WmTimer()}, 33);
