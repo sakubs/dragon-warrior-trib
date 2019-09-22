@@ -26,9 +26,9 @@ function wmSize(ca) {
 }
 
 
-function WmTimer() {
+function wmTimer(ca) {
     ++gFrame;
-    const ca = document.getElementById("main");
+    
     wmSize(ca);
     wmPaint(ca);
 }
@@ -36,10 +36,12 @@ function WmTimer() {
 
 /* ブラウザ起動イベント */
 window.onload = function() {
+    const ca = document.getElementById("main");
     gImgMap = new Image();
     gImgMap.src = "img/tiles.png";
 
+    wmSize(ca);
     setInterval(function() {
         /* 30.3fps */
-        WmTimer()}, 33);
+        wmTimer(ca)}, 33);
 }
