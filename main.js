@@ -6,19 +6,31 @@ const FONT = "48px monospace";
 let gFrame = 0;
 let gImgMap;
 
-function WmTimer() {
-    ++gFrame;
-    /* main canvas. */
-    const ca = document.getElementById("main");
-    const g = ca.getContext("2d");
 
-    for (let x = 0; x < 16; ++x) {
-        for (let y = 0; y < 16; ++y) {
-            g.drawImage(gImgMap, x * 64, y * 64);
+function wmPaint(ca) {
+    const g = ca.getContext("2d");
+    
+    for (let x = 3; x < 4; ++x) {
+        for (let y = 3; y < 4; ++y) {
+            g.drawImage(gImgMap, x * 16, y * 16);
         }
     }
     g.font = FONT;
     g.fillText("Hello World" + gFrame, gFrame / 10, 64);
+}
+
+
+function wmSize(ca) {
+    ca.width = window.innerWidth;
+    ca.height = window.innerHeight;
+}
+
+
+function WmTimer() {
+    ++gFrame;
+    const ca = document.getElementById("main");
+    wmSize(ca);
+    wmPaint(ca);
 }
 
 
