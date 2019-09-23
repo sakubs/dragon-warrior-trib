@@ -7,10 +7,13 @@ const MAP_WIDTH = 32;
 const MAP_HEIGHT = 32;
 const SMOOTH = 0;
 const TILE_SIZE = 8;
+const PLAYER_W = 8;
+const PLAYER_H = 9;
 const TILE_COLUMN = 4;
 const TILE_ROW = 4;
-
-const gameMap = [
+const MAP_IMAGE_PATH = "img/map.png";
+const PLAYER_IMAGE_PATH = "img/player.png";
+const GAME_MAP = [
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -50,6 +53,8 @@ let gameHeight;
 let gameScreen;
 let gameFrame = 0;
 let gameImageMap;
+let playerImage;
+
 
 function drawMain() {
     const game = gameScreen.getContext("2d");
@@ -60,12 +65,22 @@ function drawMain() {
                 game, 
                 x * TILE_SIZE, 
                 y * TILE_SIZE, 
-                gameMap[y * MAP_WIDTH + x]);            
+                GAME_MAP[y * MAP_WIDTH + x]);            
         }
     }
 
-    game.font = FONT;
-    game.fillText("Dragn Waryer" + gameFrame, gameFrame / 10, 64);
+    game.drawImage(
+        playerImage, 
+        PLAYER_W, 
+        0, 
+        PLAYER_W, 
+        PLAYER_H, 
+        WIDTH / 2, 
+        HEIGHT / 2, 
+        PLAYER_W, PLAYER_H
+    );
+    // game.font = FONT;
+    // game.fillText("Dragn Waryer" + gameFrame, gameFrame / 10, 64);
 }
 
 
@@ -85,6 +100,13 @@ function drawTile(game, x, y, index) {
     );
 }
 
+
+function loadImage() {
+    gameImageMap = new Image(); 
+    gameImageMap.src = MAP_IMAGE_PATH;
+    playerImage = new Image();
+    playerImage.src = PLAYER_IMAGE_PATH;
+}
 
 function wmPaint() {
     drawMain();
@@ -131,7 +153,7 @@ function wmTimer() {
 }
 
 window.onload = function() {
-    gameImageMap = new Image(); gameImageMap.src = "img/map.png";
+    loadImage()
 
     gameScreen = document.createElement("canvas");
     gameScreen.width = WIDTH;
