@@ -54,18 +54,21 @@ let gameScreen;
 let gameFrame = 0;
 let gameImageMap;
 let playerImage;
-
+let playerX = 10;
+let playerY = 5;
 
 function drawMain() {
     const game = gameScreen.getContext("2d");
 
-    for (let y = 0; y < 32; y++) {
-        for (let x = 0; x < 64; x++) {
+    for (let y = 0; y < 20; y++) {
+        for (let x = 0; x < 20; x++) {
+            let px = playerX + x;
+            let py = playerY + y;
             drawTile(
                 game, 
                 x * TILE_SIZE, 
                 y * TILE_SIZE, 
-                GAME_MAP[y * MAP_WIDTH + x]);            
+                GAME_MAP[py * MAP_WIDTH + px]);            
         }
     }
 
