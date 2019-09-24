@@ -209,6 +209,11 @@ window.onkeydown = function(event) {
     };
 }
 
+// マップループ
+playerX += MAP_WIDTH;
+playerX %= MAP_WIDTH;
+playerY += MAP_HEIGHT;
+playerY %= MAP_HEIGHT;
 
 window.onload = function() {
     loadImage()
