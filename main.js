@@ -74,23 +74,24 @@ function drawMain() {
             let py = playerY + y;
             drawTile(
                 game, 
-                x * TILE_SIZE, 
+                x * TILE_SIZE - TILE_SIZE / 2, 
                 y * TILE_SIZE, 
                 GAME_MAP[py * MAP_WIDTH + px]);            
         }
     }
 
-    // game.fillStyle = "#ff0000";
-    // game.fillRect = (0, HEIGHT / 2 - 1, WIDTH, 2);
-    // game.fillRect = (WIDTH / 2 - 1, 0, 2, HEIGHT);
+    game.fillStyle = "#f00";
+    game.fillRect = (0, HEIGHT / 2 - 1, WIDTH, 2);
+    game.fillRect = (WIDTH / 2 - 1, 0, 2, HEIGHT);
+
     game.drawImage(
         playerImage, 
         PLAYER_W, 
         0, 
         PLAYER_W, 
         PLAYER_H, 
-        WIDTH / 2, 
-        HEIGHT / 2, 
+        WIDTH / 2 - PLAYER_W / 2, 
+        HEIGHT / 2 - PLAYER_H + TILE_SIZE / 2, 
         PLAYER_W, 
         PLAYER_H
     );
