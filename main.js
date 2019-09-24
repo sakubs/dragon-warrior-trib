@@ -48,6 +48,12 @@ const GAME_MAP = [
 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7,
 ];
 
+/* Keys */
+const LEFT_KEY = 37;
+const UP_KEY = 38;
+const RIGHT_KEY = 39;
+const DOWN_KEY = 40;
+
 let gameWidth;
 let gameHeight;    
 let gameScreen;
@@ -57,7 +63,9 @@ let playerImage;
 let playerX = 10;
 let playerY = 5;
 
+
 function drawMain() {
+
     const game = gameScreen.getContext("2d");
 
     for (let y = 0; y < 20; y++) {
@@ -72,6 +80,9 @@ function drawMain() {
         }
     }
 
+    // game.fillStyle = "#ff0000";
+    // game.fillRect = (0, HEIGHT / 2 - 1, WIDTH, 2);
+    // game.fillRect = (WIDTH / 2 - 1, 0, 2, HEIGHT);
     game.drawImage(
         playerImage, 
         PLAYER_W, 
@@ -80,7 +91,8 @@ function drawMain() {
         PLAYER_H, 
         WIDTH / 2, 
         HEIGHT / 2, 
-        PLAYER_W, PLAYER_H
+        PLAYER_W, 
+        PLAYER_H
     );
     // game.font = FONT;
     // game.fillText("Dragn Waryer" + gameFrame, gameFrame / 10, 64);
@@ -88,8 +100,10 @@ function drawMain() {
 
 
 function drawTile(game, x, y, index) {
+    
     const xIndex = (index % TILE_COLUMN) * TILE_SIZE;
-    const yIndex = Math.floor(index / TILE_ROW) * TILE_SIZE;
+    const yIndex = Math.floor(index / TILE_COLUMN) * TILE_SIZE;
+    
     game.drawImage(
         gameImageMap, 
         xIndex, 
@@ -105,33 +119,37 @@ function drawTile(game, x, y, index) {
 
 
 function loadImage() {
+    
     gameImageMap = new Image(); 
     gameImageMap.src = MAP_IMAGE_PATH;
     playerImage = new Image();
     playerImage.src = PLAYER_IMAGE_PATH;
 }
 
+
 function wmPaint() {
+
     drawMain();
 
     const canvas = document.getElementById("main");
     const game = canvas.getContext("2d");
 
     game.drawImage(
-            gameScreen, 
-            0, 
-            0, 
-            gameScreen.width, 
-            gameScreen.height, 
-            0, 
-            0, 
-            gameWidth, 
-            gameHeight
+        gameScreen, 
+        0, 
+        0, 
+        gameScreen.width, 
+        gameScreen.height, 
+        0, 
+        0, 
+        gameWidth, 
+        gameHeight
     );
 }
 
 
 function wmSize() {
+    
     const canvas = document.getElementById("main");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -154,6 +172,33 @@ function wmTimer() {
     gameFrame++;
     wmPaint();
 }
+
+
+/* キー押すイベント */
+window.onkeydown = function(event) {
+    switch(event.keyCode) {
+    case  LEFT_KEY:
+        // 左
+        playerX--;
+        break;
+
+    case UP_KEY:
+        // 上
+        playerY--;
+        break;
+
+    case RIGHT_KEY:
+        // 右
+        playerX++;
+        break;
+
+    case DOWN_KEY:
+        // 下
+        playerY++;
+        break;
+    };
+}
+
 
 window.onload = function() {
     loadImage()
