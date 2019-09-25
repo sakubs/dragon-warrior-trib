@@ -10,6 +10,8 @@ const SMOOTH = 0;
 const TILE_SIZE = 8;
 const PLAYER_W = 8;
 const PLAYER_H = 9;
+const START_X = 15;
+const START_Y = 17;
 const TILE_COLUMN = 4;
 const TILE_ROW = 4;
 const WINDOW_STYLE = "rgba( 0, 0, 0, 0.75 )";
@@ -62,20 +64,28 @@ let gameScreen;
 let gameFrame = 0;
 let gameImageMap;
 let playerImage;
-let playerX = 10;
-let playerY = 5;
+let playerX = START_X * TILE_SIZE;
+let playerY = START_Y * TILE_SIZE;
 
 
 function drawMain() {
 
     const game = gameScreen.getContext("2d");
 
+    let mx = Math.floor(playerX / TILE_SIZE);
+    let my = Math.floor(playerY / TILE_SIZE);
+
     for (let dy = -7; dy <= 7; dy++) {
         let y = dy + 7;
+        /* タイル座標Y */
+        let ty = my + dy;
+        let py = (ty + MAP_HEIGHT) % MAP_HEIGHT;
+            
         for (let dx = -8; dx <= 8; dx++) {
             let x = dx + 8;
-            let px = (playerX + dx + MAP_WIDTH) % MAP_WIDTH;
-            let py = (playerY + dy + MAP_HEIGHT) % MAP_HEIGHT;
+            /* タイル座標X */
+            let tx = mx + dx;
+            let px = (tx + MAP_WIDTH) % MAP_WIDTH;
             drawTile(
                 game, 
                 x * TILE_SIZE - TILE_SIZE / 2, 
@@ -105,7 +115,14 @@ function drawMain() {
 
     game.font = FONT;
     game.fillStyle = FONT_STYLE;
-    game.fillText("x=" + playerX + " y=" + playerY, 25, 115);
+    game.fillText(
+        "x=" + playerX + 
+        " y=" + playerY + 
+        " m=" + 
+        GAME_MAP[my * MAP_WIDTH + mx], 
+        25, 
+        115
+    );
 }
 
 
@@ -210,10 +227,10 @@ window.onkeydown = function(event) {
 }
 
 // マップループ
-playerX += MAP_WIDTH;
-playerX %= MAP_WIDTH;
-playerY += MAP_HEIGHT;
-playerY %= MAP_HEIGHT;
+playerX += (MAP_WIDTH * TILE_SIZE);
+playerX %= (MAP_WIDTH * TILE_SIZE);
+playerY += (MAP_HEIGHT * TILE_SIZE);
+playerY %= (MAP_HEIGHT * TILE_SIZE);
 
 window.onload = function() {
     loadImage()
